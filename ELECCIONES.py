@@ -1,4 +1,4 @@
-def impresion(nombres,codigos):
+def impresionRegiones(nombres,codigos):
     print("________________________________________________________________________")
     print("                          \033[1mREGIONES GEOGRAFICAS\033[0m        ")
     print("________________________________________________________________________")
@@ -6,7 +6,7 @@ def impresion(nombres,codigos):
     print("________________________________________________________________________")
 
    
-def impresionDos(partidos,nombres,abv,lista):
+def impresionPartidos(partidos,nombres,abv,lista):
     print("________________________________________________________________________")
     print("                          \033[1mPARTIDOS POLITICOS\033[0m        ")
     print("________________________________________________________________________")
