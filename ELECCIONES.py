@@ -27,9 +27,7 @@ def validarAbreviatura(abv):
 #def validarNumerolista(numero) ###VALIDAMOS QUE EL NUMERO DE LA LISTA SEA UN VALOR ARBITRARIO DISTINTO DE CERO
     
 
-partido = input("INGRESAR PARTIDO:")
-validarPartido(partido)
-    
+
 
 
 
