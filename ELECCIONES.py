@@ -15,7 +15,7 @@ def impresionDos(partidos,nombres,abv,lista):
    
 
 def validarPartido(partido): ####  ✔✔✔ VALIDAMOS QUE EL PARTIDO NO SEA UN CARACTER VACÍO, FUNCIONA ✔ 
-    while partido =="":
+    while partido == "":
         partido = input("Valor vacío, reingresar partido")
     return partido
 
@@ -57,5 +57,5 @@ else:
         partido = input("Ingrese nombre del partido, FIN para finalizar: ") 		###VOLVEMOS A PEDIR PARTIDO, PARA REEMPEZAR O TERMINAR WHILE (CONDICIÓN DE FIN ACÁ)
         validarPartido(partido)														###VALIDAMOS PARTIDO
     
-    archPartido.close															### TERMINADO EL WHILE, CERRAMOS EL ARCHIVO
+    archPartido.close()															### TERMINADO EL WHILE, CERRAMOS EL ARCHIVO
 
