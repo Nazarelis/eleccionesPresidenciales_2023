@@ -40,9 +40,9 @@ def validarNumeroLista(numero): ###✔✔✔ VALIDAMOS NUMEROlista ENTERO DISTIN
 
 
 try:
-    archPartido = open("C:\partidosPoliticos.csv","wt")        								###CREAMOS EL ARCHIVO
+    archPartido = open("/Users/gonzalo/Desktop/partidosPoliticos.csv","wt")        		###CREAMOS EL ARCHIVO DONDE SE ESCRIBIRÁ LA INFO DE PARTIDOS POLITICOS
 except IOError:
-    print("No se pudo crear el archivo")                   							###EXCEPCIÓN SI NO PODEMOS CREARLO (REVISAR UBICACION)
+    print("No se pudo crear el archivo")                   							###EXCEPCIÓN EN CASO DE NO PODER CREARLO
 else:
     partido = input("Ingrese nombre del partido, FIN para finalizar: ") 			###INGRESAMOS PARTIDO FUERA DE WHILE (CONDICIÓN DE FIN ACÁ)
     validarPartido(partido)															###VALIDAMOS PARTIDO
@@ -54,8 +54,8 @@ else:
         validarNumeroLista(numeroLista)
         archPartido.write(partido+";"+abreviatura+";"+str(numeroLista)+"\n")		###PASAMOS LAS 3 VARIABLES AL ARCHIVO YA CREADO Y VOLVEMOS A PEDIR PARTIDO LUEGO
         
-        partido = input("Ingrese nombre del partido, FIN para finalizar: ") 		###VOLVEMOS A PEDIR PARTIDO, PARA REEMPEZAR O TERMINAR WHILE (CONDICIÓN DE FIN ACÁ)
+        partido = input("Ingrese nombre del partido, FIN para finalizar: ") 		###VOLVEMOS A PEDIR PARTIDO, PARA REEMPEZAR O TERMINAR CICLO (CONDICIÓN DE FIN ACÁ)
         validarPartido(partido)														###VALIDAMOS PARTIDO
     
-    archPartido.close()															### TERMINADO EL WHILE, CERRAMOS EL ARCHIVO
+    archPartido.close()															### TERMINADO EL WHILE, CERRAMOS EL ARCHIVO CON LOS CAMBIOS REALIZADOS
 
