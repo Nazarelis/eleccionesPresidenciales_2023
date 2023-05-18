@@ -31,11 +31,13 @@ def validarNumeroLista(numero): ###✔✔✔ VALIDAMOS NUMEROlista ENTERO DISTIN
     return numero
 
 # Programa principal
-archivo1=open(r"C:\Users\marilyn\OneDrive\Escritorio\programacion\eleccionesPresidenciales_2023\partidosPoliticos.txt", 'w')
-archivo1.write("primer renglón. \n")
+archivo1=open(r"partidosPoliticos.txt", 'a')# modo a permite seguir escribiendo 
+partidosPoliticos= ["juanito\n", "juanito\n", "juan\n", "juan\n", "juan\n"]
+
+archivo1.writelines(partidosPoliticos)#escribe en forma de lista
 archivo1.close()
 
-archivo2=open(r"C:\Users\marilyn\OneDrive\Escritorio\programacion\eleccionesPresidenciales_2023\regionesGeograficas.txt", 'w')
+archivo2=open(r"regionesGeograficas.txt", 'w')
 archivo2.write("primer renglón prueba. \n")
 archivo2.close()
 
