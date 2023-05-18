@@ -35,4 +35,27 @@ def validarNumeroLista(numero): ###✔✔✔ VALIDAMOS NUMEROlista ENTERO DISTIN
 
 
 
+##########  PROGRAMA PRINCIPAL  ##############
+
+
+
+try:
+    archPartido = open("C:\partidosPoliticos.csv","wt")        								###CREAMOS EL ARCHIVO
+except IOError:
+    print("No se pudo crear el archivo")                   							###EXCEPCIÓN SI NO PODEMOS CREARLO (REVISAR UBICACION)
+else:
+    partido = input("Ingrese nombre del partido, FIN para finalizar: ") 			###INGRESAMOS PARTIDO FUERA DE WHILE (CONDICIÓN DE FIN ACÁ)
+    validarPartido(partido)															###VALIDAMOS PARTIDO
+    while partido !="FIN":														
+        
+        abreviatura = input("Ingrese Abreviatura del partido: ")						###INGRESAMOS Y LUEGO VALIDAMOS ABREVIATURA
+        validarAbreviatura(abreviatura)
+        numeroLista = int(input("Ingresar numero de lista distinto de cero: "))     ###INGRESAMOS Y LUEGO VALIDAMOS NUMERO DE LISTA (ES INT DISTINTO CERO)
+        validarNumeroLista(numeroLista)
+        archPartido.write(partido+";"+abreviatura+";"+str(numeroLista)+"\n")		###PASAMOS LAS 3 VARIABLES AL ARCHIVO YA CREADO Y VOLVEMOS A PEDIR PARTIDO LUEGO
+        
+        partido = input("Ingrese nombre del partido, FIN para finalizar: ") 		###VOLVEMOS A PEDIR PARTIDO, PARA REEMPEZAR O TERMINAR WHILE (CONDICIÓN DE FIN ACÁ)
+        validarPartido(partido)														###VALIDAMOS PARTIDO
+    
+    archPartido.close															### TERMINADO EL WHILE, CERRAMOS EL ARCHIVO
 
