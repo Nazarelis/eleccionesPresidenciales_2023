@@ -29,7 +29,15 @@ def validarNumeroLista(numero): ###✔✔✔ VALIDAMOS NUMEROlista ENTERO DISTIN
     while numero ==0:
         numero = int(input("Número igual a cero, reingresa numero: "))
     return numero
-    
+
+# Programa principal
+archivo1=open(r"C:\Users\marilyn\OneDrive\Escritorio\programacion\eleccionesPresidenciales_2023\partidosPoliticos.txt", 'w')
+archivo1.write("primer renglón. \n")
+archivo1.close()
+
+archivo2=open(r"C:\Users\marilyn\OneDrive\Escritorio\programacion\eleccionesPresidenciales_2023\regionesGeograficas.txt", 'w')
+archivo2.write("primer renglón prueba. \n")
+archivo2.close()
 
 
 
