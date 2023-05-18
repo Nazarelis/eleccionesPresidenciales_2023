@@ -42,7 +42,7 @@ def validarNumeroLista(numero): ###✔✔✔ VALIDAMOS NUMEROlista ENTERO DISTIN
 try:
     archPartido = open("/Users/gonzalo/Desktop/partidosPoliticos.csv","wt")        		###CREAMOS EL ARCHIVO DONDE SE ESCRIBIRÁ LA INFO DE PARTIDOS POLITICOS
 except IOError:
-    print("No se pudo crear el archivo")                   							###EXCEPCIÓN EN CASO DE NO PODER CREARLO
+    print("No se pudo crear el archivo de Partidos")                   							###EXCEPCIÓN EN CASO DE NO PODER CREARLO
 else:
     partido = input("Ingrese nombre del partido, FIN para finalizar: ") 			###INGRESAMOS PARTIDO FUERA DE WHILE (CONDICIÓN DE FIN ACÁ)
     validarPartido(partido)															###VALIDAMOS PARTIDO
@@ -58,4 +58,22 @@ else:
         validarPartido(partido)														###VALIDAMOS PARTIDO
     
     archPartido.close()															### TERMINADO EL WHILE, CERRAMOS EL ARCHIVO CON LOS CAMBIOS REALIZADOS
+
+
+contadorRegion = 1                                                            ###CREAMOS UN CONTADOR PARA ASIGNAR A CADA REGION SU CODIGO
+
+try: archRegiones = open("/Users/gonzalo/Desktop/regiones.csv","wt")         ###CREAMOS ARCHIVO PARA REGIONES
+except IOError:
+    print("No se pudo crear el archivo de Regiones")                         ###CREAMOS EXCEPCION EN CASO DE NO PODER CREARLO
+else:
+    region = input("Ingrese una region, FIN para finalizar la carga: ") #####    VALIDAR QUE LA REGION NO EXISTA!!!!!!!
+    while region !="FIN":
+                              #### SI LA REGION YA EXISTE, PEDIR OTRA AQUÍ, VA UN WHILE
+        archRegiones.write(region+";"+str(contadorRegion)+"\n")       ### ESCRIBIMOS LA REGION Y EL IDENTIFICADOR EN EL ARCHIVO
+        contadorRegion+=1                                             ### AUMENTAMOS EN 1 EL IDENTIFICADOR, PARA LA SIGUIENTE REGION
+        region = input("Ingrese una region: ")                        ### INGRESAMOS SIGUIENTE REGION O FINALIZAMOS LA CARGA
+    
+    archRegiones.close()                                              ### CERRAMOS EL ARCHIVO DE REGIONES
+         
+
 
