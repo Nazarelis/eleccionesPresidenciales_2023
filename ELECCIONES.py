@@ -62,39 +62,39 @@ else:
     archRegiones.close()                                              ### CERRAMOS EL ARCHIVO DE REGIONES
          
 
-try: archRegionesLectura = open("/Users/gonzalo/Desktop/regiones.csv","rt")
+try: archRegionesLectura = open("/Users/gonzalo/Desktop/regiones.csv","rt")      ###ARCHIVO PARA LEER
 except IOError:
-    print("No se pudo leer el archivo Regiones")
+    print("No se pudo leer el archivo Regiones")                                 ###EXCEPCION EN CASO DE NO PODER ABRIR ARCHIVO
 else:
     try:
-        print("\n\n\n")
+        print("\n\n\n")                                                                #FORMATO DE PRINT
         print("________________________________________________________________________")
         print("                          \033[1mREGIONES GEOGRAFICAS\033[0m        ")
         print("________________________________________________________________________")
-        print("                \033[1mNOMBRE\033[0m                      \033[1mCODIGO O ABREVIATURA\033[0m       ")
+        print("                \033[1mNOMBRE\033[0m                      \033[1mCODIGO O ABREVIATURA\033[0m       ")   ###FORMATO DE NEGRITA
         print("________________________________________________________________________")
-        for linea in archRegionesLectura:
-            region,codigo = linea.split(";")
+        for linea in archRegionesLectura:                                        ##### ITERAR POR CADA LINEA DEL ARCHIVO
+            region,codigo = linea.split(";")                                     ##### SEPARAR CADA VARIABLE DEL ARCHIVO
             print("        ""%15s"%region,"                            ",codigo,"       ")
             print("________________________________________________________________________")
     finally:
         archRegionesLectura.close()
 
 
-try: archPartidosLectura = open("/Users/gonzalo/Desktop/partidosPoliticos.csv","rt")
+try: archPartidosLectura = open("/Users/gonzalo/Desktop/partidosPoliticos.csv","rt")         #### ABRIR ARCHIVO 
 except IOError:
-    print("No se pudo leer el archivo Partidos")
+    print("No se pudo leer el archivo Partidos")                                             #### EXCEPCIÓN EN CASO DE NO PODER ABRIR ARCHIVO
 else:
     try:
         print("\n\n\n")
         print("________________________________________________________________________")
         print("                          \033[1mPARTIDOS POLITICOS\033[0m        ")
         print("________________________________________________________________________")
-        print("       \033[1mNOMBRE\033[0m                 \033[1mABREVIATURA\033[0m                  \033[1mLISTA\033[0m  ")
+        print("       \033[1mNOMBRE\033[0m                 \033[1mABREVIATURA\033[0m                  \033[1mLISTA\033[0m  ")   ###FORMATO DE NEGRITA
         print("________________________________________________________________________")
-        for linea in archPartidosLectura:
-            nombre,abreviatura,lista = linea.split(";")
+        for linea in archPartidosLectura:                                                   #### ITERAR SOBRE ARCHIVO POR CADA REGISTRO
+            nombre,abreviatura,lista = linea.split(";")                                     #### SEPARAR VARIABLES DE ARCHIVO CSV CON REFERENCIA DE SEPARADOR ";"
             print("    ""%10s"%nombre,"     ","%15s"%abreviatura,"     ","%5s"%lista,"       ")
             print("________________________________________________________________________")
     finally:
-        archPartidosLectura.close()
+        archPartidosLectura.close()                                                         ### CERRAR ARCHIVO
