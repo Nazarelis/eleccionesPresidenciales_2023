@@ -94,7 +94,7 @@ else:
         print("________________________________________________________________________")
         for linea in archPartidosLectura:                                                   #### ITERAR SOBRE ARCHIVO POR CADA REGISTRO
             nombre,abreviatura,lista = linea.split(";")                                     #### SEPARAR VARIABLES DE ARCHIVO CSV CON REFERENCIA DE SEPARADOR ";"
-            print("    ""%10s"%nombre,"     ","%15s"%abreviatura,"     ","%5s"%lista,"       ")
+            print("    ""%10s"%nombre,"     ","%15s"%abreviatura,"                ","%10s"%lista,"       ")
             print("________________________________________________________________________")
     finally:
         archPartidosLectura.close()                                                         ### CERRAR ARCHIVO
