@@ -1,4 +1,5 @@
-def impresion(nombres,codigos):
+def impresion(archivo):
+    
     print("________________________________________________________________________")
     print("                          \033[1mREGIONES GEOGRAFICAS\033[0m        ")
     print("________________________________________________________________________")
@@ -71,9 +72,44 @@ else:
                               #### SI LA REGION YA EXISTE, PEDIR OTRA AQUÍ, VA UN WHILE
         archRegiones.write(region+";"+str(contadorRegion)+"\n")       ### ESCRIBIMOS LA REGION Y EL IDENTIFICADOR EN EL ARCHIVO
         contadorRegion+=1                                             ### AUMENTAMOS EN 1 EL IDENTIFICADOR, PARA LA SIGUIENTE REGION
-        region = input("Ingrese una region: ")                        ### INGRESAMOS SIGUIENTE REGION O FINALIZAMOS LA CARGA
+        region = input("Ingrese una region, FIN para finalizar la carga: ")                        ### INGRESAMOS SIGUIENTE REGION O FINALIZAMOS LA CARGA
     
     archRegiones.close()                                              ### CERRAMOS EL ARCHIVO DE REGIONES
          
 
+try: archRegionesLectura = open("/Users/gonzalo/Desktop/regiones.csv","rt")
+except IOError:
+    print("No se pudo leer el archivo Regiones")
+else:
+    try:
+        print("\n\n\n")
+        print("________________________________________________________________________")
+        print("                          \033[1mREGIONES GEOGRAFICAS\033[0m        ")
+        print("________________________________________________________________________")
+        print("                \033[1mNOMBRE\033[0m                      \033[1mCODIGO O ABREVIATURA\033[0m       ")
+        print("________________________________________________________________________")
+        for linea in archRegionesLectura:
+            region,codigo = linea.split(";")
+            print("        ""%15s"%region,"                            ",codigo,"       ")
+            print("________________________________________________________________________")
+    finally:
+        archRegionesLectura.close()
 
+
+try: archPartidosLectura = open("/Users/gonzalo/Desktop/partidosPoliticos.csv","rt")
+except IOError:
+    print("No se pudo leer el archivo Partidos")
+else:
+    try:
+        print("\n\n\n")
+        print("________________________________________________________________________")
+        print("                          \033[1mPARTIDOS POLITICOS\033[0m        ")
+        print("________________________________________________________________________")
+        print("       \033[1mNOMBRE\033[0m                 \033[1mABREVIATURA\033[0m                  \033[1mLISTA\033[0m  ")
+        print("________________________________________________________________________")
+        for linea in archPartidosLectura:
+            nombre,abreviatura,lista = linea.split(";")
+            print("    ""%10s"%nombre,"     ","%15s"%abreviatura,"     ","%5s"%lista,"       ")
+            print("________________________________________________________________________")
+    finally:
+        archPartidosLectura.close()
