@@ -27,13 +27,21 @@ def duplicadoValidarPartido(partido,lista):   ### VALIDAMOS QUE NO SE INGRESE PA
     while partido.upper() in lista or partido == "":
         partido = input("Partido repetido, ingrese otro partido: ")
     return partido
+def duplicadoValidarAbreviaturaPartido(abreviatura,lista):   ### VALIDAMOS QUE NO SE INGRESE LA ABREVIATURA DE PARTIDO REPETIDO O ESPACIO VACÍO✔✔✔✔ 
+    while abreviatura.upper() in lista or abreviatura == "":
+        abreviatura = input("Partido de abreviatura repetido, ingrese otra abreviatura de partido: ")
+    return abreviatura     
+def duplicadoValidarNumeroLista(numero,lista):   ### VALIDAMOS QUE NO SE INGRESE UN NÚMERO DE LISTA REPETIDO O ESPACIO VACÍO✔✔✔✔ 
+    while numero in lista or numero == "":
+        numero = int(input("Número de Lista repetido, ingrese otro número de lista: "))
+    return numero
 #FIN BLOQUE DUPLICADOS
 
 
 ### Inicio bloque de codigo para imprimir datos en pantalla
 
 def imprimirDatosPartidos():
-    try: archPartidosLectura = open(r"C:\Users\ThinkPad\Desktop\partidosPoliticos.txt","rt")                                                #### ABRIR ARCHIVO 
+    try: archPartidosLectura = open("partidosPoliticos.csv","rt")                                                #### ABRIR ARCHIVO 
     except IOError:
         print("No se pudo leer el archivo Partidos")                                                                                    #### EXCEPCIÓN EN CASO DE NO PODER ABRIR ARCHIVO
     else:
@@ -53,7 +61,7 @@ def imprimirDatosPartidos():
             
 
 def imprimirDatosRegiones():
-    try: archRegionesLectura = open(r"C:\Users\ThinkPad\Desktop\zonaGeografica.txt","rt")                                               ###ARCHIVO PARA LEER
+    try: archRegionesLectura = open("zonaGeografica.csv","rt")                                               ###ARCHIVO PARA LEER
     except IOError:
         print("No se pudo leer el archivo Regiones")                                                                                    ###EXCEPCION EN CASO DE NO PODER ABRIR ARCHIVO
     else:
@@ -82,30 +90,36 @@ def imprimirDatosRegiones():
 
 listaRegiones=[]
 listaPartidos=[]
-
+listaAbreviaturas=[]
+listaDeNumeros = []
 try:
-    archPartido = open("/Users/gonzalo/Desktop/partidosPoliticos.csv","wt")        		###CREAMOS EL ARCHIVO DONDE SE ESCRIBIRÁ LA INFO DE PARTIDOS POLITICOS
+    archPartido = open("partidosPoliticos.csv","wt")        		###CREAMOS EL ARCHIVO DONDE SE ESCRIBIRÁ LA INFO DE PARTIDOS POLITICOS
 except IOError:
     print("No se pudo crear el archivo de Partidos")                   							###EXCEPCIÓN EN CASO DE NO PODER CREARLO
 
 else:
     partido = input("Ingrese nombre del partido, FIN para finalizar: ") 			###INGRESAMOS PARTIDO FUERA DE WHILE (CONDICIÓN DE FIN ACÁ)
-    partido = duplicadoValidarPartido(partido,listaPartidos)															###VALIDAMOS PARTIDO
-    listaPartidos.append(partido.upper())
+    
     while partido.upper() !="FIN":														
-        
+        partido=duplicadoValidarPartido(partido,listaPartidos)
+        partido = duplicadoValidarPartido(partido,listaPartidos)															###VALIDAMOS PARTIDO
+        listaPartidos.append(partido.upper())
         abreviatura = input("Ingrese Abreviatura del partido: ")						###INGRESAMOS Y LUEGO VALIDAMOS ABREVIATURA
+        abreviatura = duplicadoValidarAbreviaturaPartido(abreviatura,listaAbreviaturas)
+        listaAbreviaturas.append(abreviatura.upper())
         validarAbreviatura(abreviatura)
         numeroLista = int(input("Ingresar numero de lista distinto de cero: "))     ###INGRESAMOS Y LUEGO VALIDAMOS NUMERO DE LISTA (ES INT DISTINTO CERO)
+        numeroLista = duplicadoValidarNumeroLista(numeroLista,listaDeNumeros)
+        listaDeNumeros.append(numeroLista)
         validarNumeroLista(numeroLista)
         archPartido.write(partido.upper()+";"+abreviatura.upper()+";"+str(numeroLista)+"\n")		###PASAMOS LAS 3 VARIABLES AL ARCHIVO YA CREADO Y VOLVEMOS A PEDIR PARTIDO LUEGO
         partido = input("Ingrese nombre del partido, FIN para finalizar: ") 		###VOLVEMOS A PEDIR PARTIDO, PARA REEMPEZAR O TERMINAR CICLO (CONDICIÓN DE FIN ACÁ)
-        partido=duplicadoValidarPartido(partido,listaPartidos)
+
     archPartido.close()															### TERMINADO EL WHILE, CERRAMOS EL ARCHIVO CON LOS CAMBIOS REALIZADOS
 
 contadorRegion = 1                                                            ###CREAMOS UN CONTADOR PARA ASIGNAR A CADA REGION SU CODIGO
 
-try: archRegiones = open("/Users/gonzalo/Desktop/regiones.csv","wt")         ###CREAMOS ARCHIVO PARA REGIONES
+try: archRegiones = open("zonaGeografica.csv","wt")         ###CREAMOS ARCHIVO PARA REGIONES
 except IOError:
     print("No se pudo crear el archivo de Regiones")                         ###CREAMOS EXCEPCION EN CASO DE NO PODER CREARLO
 else:
@@ -120,9 +134,8 @@ else:
 
         
     archRegiones.close()                                              ### CERRAMOS EL ARCHIVO DE REGIONES
-         
 
-        
+       
 #Imprimimos en pantalla los datos ingresados 
 imprimirDatosPartidos()
 imprimirDatosRegiones()
