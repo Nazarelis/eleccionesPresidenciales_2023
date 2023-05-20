@@ -1,10 +1,5 @@
 
 
-def validarPartido(partido): ####  ✔✔✔ VALIDAMOS QUE EL PARTIDO NO SEA UN CARACTER VACÍO, FUNCIONA ✔ 
-    while partido == "":
-        partido = input("Valor vacío, reingresar partido")
-    return partido
-
 def validarAbreviatura(abv):
     while (abv.isalnum()==False): ##✔✔✔✔✔VALIDAMOS QUE EL VALOR SEA ALFANUMERICO, FUNCIONA ✔ ✔ ✔✔ ✔ ✔
         abv = input("Abreviatura debe ser un valor alfanumerico, reingresar")
@@ -15,6 +10,16 @@ def validarNumeroLista(numero): ###✔✔✔ VALIDAMOS NUMEROlista ENTERO DISTIN
     while numero ==0:
         numero = int(input("Número igual a cero, reingresa numero: "))
     return numero
+
+def duplicadoRegion(region,lista):### VALIDAMOS QUE LA REGION NO ESTÉ DUPLICADA ✔✔✔✔✔✔✔✔
+    while region.upper() in lista:
+        region = input("Region repetida, ingresar otra region:")
+    return region.upper()
+    
+def duplicadoValidarPartido(partido,lista):   ### VALIDAMOS QUE NO SE INGRESE PARTIDO REPETIDO O ESPACIO VACÍO✔✔✔✔ 
+    while partido.upper() in lista or partido == "":
+        partido = input("Partido repetido, ingrese otro partido: ")
+    return partido
     
 
 
@@ -25,13 +30,17 @@ def validarNumeroLista(numero): ###✔✔✔ VALIDAMOS NUMEROlista ENTERO DISTIN
 
 
 
+listaRegiones=[]
+listaPartidos=[]
+
 try:
     archPartido = open("/Users/gonzalo/Desktop/partidosPoliticos.csv","wt")        		###CREAMOS EL ARCHIVO DONDE SE ESCRIBIRÁ LA INFO DE PARTIDOS POLITICOS
 except IOError:
     print("No se pudo crear el archivo de Partidos")                   							###EXCEPCIÓN EN CASO DE NO PODER CREARLO
 else:
     partido = input("Ingrese nombre del partido, FIN para finalizar: ") 			###INGRESAMOS PARTIDO FUERA DE WHILE (CONDICIÓN DE FIN ACÁ)
-    validarPartido(partido)															###VALIDAMOS PARTIDO
+    partido = duplicadoValidarPartido(partido,listaPartidos)															###VALIDAMOS PARTIDO
+    listaPartidos.append(partido.upper())
     while partido.upper() !="FIN":														
         
         abreviatura = input("Ingrese Abreviatura del partido: ")						###INGRESAMOS Y LUEGO VALIDAMOS ABREVIATURA
@@ -41,8 +50,7 @@ else:
         archPartido.write(partido.upper()+";"+abreviatura.upper()+";"+str(numeroLista)+"\n")		###PASAMOS LAS 3 VARIABLES AL ARCHIVO YA CREADO Y VOLVEMOS A PEDIR PARTIDO LUEGO
         
         partido = input("Ingrese nombre del partido, FIN para finalizar: ") 		###VOLVEMOS A PEDIR PARTIDO, PARA REEMPEZAR O TERMINAR CICLO (CONDICIÓN DE FIN ACÁ)
-        validarPartido(partido)														###VALIDAMOS PARTIDO
-    
+        partido=duplicadoValidarPartido(partido,listaPartidos)
     archPartido.close()															### TERMINADO EL WHILE, CERRAMOS EL ARCHIVO CON LOS CAMBIOS REALIZADOS
 
 
@@ -52,13 +60,16 @@ try: archRegiones = open("/Users/gonzalo/Desktop/regiones.csv","wt")         ###
 except IOError:
     print("No se pudo crear el archivo de Regiones")                         ###CREAMOS EXCEPCION EN CASO DE NO PODER CREARLO
 else:
-    region = input("Ingrese una region, FIN para finalizar la carga: ") #####    VALIDAR QUE LA REGION NO EXISTA!!!!!!!
+    region = input("Ingrese una region, FIN para finalizar la carga: ")#####    VALIDAR QUE LA REGION NO EXISTA!!!!!!!
     while region.upper() !="FIN":
                               #### SI LA REGION YA EXISTE, PEDIR OTRA AQUÍ, VA UN WHILE
-        archRegiones.write(region.upper()+";"+str(contadorRegion).upper()+"\n")       ### ESCRIBIMOS LA REGION Y EL IDENTIFICADOR EN EL ARCHIVO
+        listaRegiones.append(region.upper())
+        archRegiones.write(region.upper()+";"+str(contadorRegion)+"\n")       ### ESCRIBIMOS LA REGION Y EL IDENTIFICADOR EN EL ARCHIVO
         contadorRegion+=1                                             ### AUMENTAMOS EN 1 EL IDENTIFICADOR, PARA LA SIGUIENTE REGION
         region = input("Ingrese una region, FIN para finalizar la carga: ")                        ### INGRESAMOS SIGUIENTE REGION O FINALIZAMOS LA CARGA
-    
+        region = duplicadoRegion(region,listaRegiones)
+
+        
     archRegiones.close()                                              ### CERRAMOS EL ARCHIVO DE REGIONES
          
 
@@ -98,3 +109,4 @@ else:
             print("________________________________________________________________________")
     finally:
         archPartidosLectura.close()                                                         ### CERRAR ARCHIVO
+        
