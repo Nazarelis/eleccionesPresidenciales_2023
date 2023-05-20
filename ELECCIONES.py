@@ -32,13 +32,13 @@ except IOError:
 else:
     partido = input("Ingrese nombre del partido, FIN para finalizar: ") 			###INGRESAMOS PARTIDO FUERA DE WHILE (CONDICIÓN DE FIN ACÁ)
     validarPartido(partido)															###VALIDAMOS PARTIDO
-    while partido !="FIN":														
+    while partido.upper() !="FIN":														
         
         abreviatura = input("Ingrese Abreviatura del partido: ")						###INGRESAMOS Y LUEGO VALIDAMOS ABREVIATURA
         validarAbreviatura(abreviatura)
         numeroLista = int(input("Ingresar numero de lista distinto de cero: "))     ###INGRESAMOS Y LUEGO VALIDAMOS NUMERO DE LISTA (ES INT DISTINTO CERO)
         validarNumeroLista(numeroLista)
-        archPartido.write(partido+";"+abreviatura+";"+str(numeroLista)+"\n")		###PASAMOS LAS 3 VARIABLES AL ARCHIVO YA CREADO Y VOLVEMOS A PEDIR PARTIDO LUEGO
+        archPartido.write(partido.upper()+";"+abreviatura.upper()+";"+str(numeroLista)+"\n")		###PASAMOS LAS 3 VARIABLES AL ARCHIVO YA CREADO Y VOLVEMOS A PEDIR PARTIDO LUEGO
         
         partido = input("Ingrese nombre del partido, FIN para finalizar: ") 		###VOLVEMOS A PEDIR PARTIDO, PARA REEMPEZAR O TERMINAR CICLO (CONDICIÓN DE FIN ACÁ)
         validarPartido(partido)														###VALIDAMOS PARTIDO
@@ -53,9 +53,9 @@ except IOError:
     print("No se pudo crear el archivo de Regiones")                         ###CREAMOS EXCEPCION EN CASO DE NO PODER CREARLO
 else:
     region = input("Ingrese una region, FIN para finalizar la carga: ") #####    VALIDAR QUE LA REGION NO EXISTA!!!!!!!
-    while region !="FIN":
+    while region.upper() !="FIN":
                               #### SI LA REGION YA EXISTE, PEDIR OTRA AQUÍ, VA UN WHILE
-        archRegiones.write(region+";"+str(contadorRegion)+"\n")       ### ESCRIBIMOS LA REGION Y EL IDENTIFICADOR EN EL ARCHIVO
+        archRegiones.write(region.upper()+";"+str(contadorRegion).upper()+"\n")       ### ESCRIBIMOS LA REGION Y EL IDENTIFICADOR EN EL ARCHIVO
         contadorRegion+=1                                             ### AUMENTAMOS EN 1 EL IDENTIFICADOR, PARA LA SIGUIENTE REGION
         region = input("Ingrese una region, FIN para finalizar la carga: ")                        ### INGRESAMOS SIGUIENTE REGION O FINALIZAMOS LA CARGA
     
