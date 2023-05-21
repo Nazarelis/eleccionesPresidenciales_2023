@@ -14,6 +14,7 @@ def ingresarValidarAbreviatura(mensaje):
     
 def ingresarValidarNumeroLista(mensaje):
     error= False
+    numeroLista=None
     while True:
         try:                                                                                               ###✔✔✔ VALIDAMOS NUMEROlista ENTERO DISTINTO DE CERO✔ ✔✔ ✔✔ ✔
             numeroLista = int(input(mensaje))
@@ -23,9 +24,8 @@ def ingresarValidarNumeroLista(mensaje):
             print("ERROR, se debe ingresar un numero")
             error = True
 
-        if numeroLista!=0 or error == False:
+        if (numeroLista!=None and numeroLista!=0) or error == False:
             break
-            
     return numeroLista
 #FIN FUNCIONES PARA VALIDAR DATOS
 
