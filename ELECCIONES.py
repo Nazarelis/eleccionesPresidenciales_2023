@@ -1,60 +1,64 @@
 # FUNCIONES PARA VALIDAR DATOS
-def ingresarValidarPartido(mensaje):                                                                                                        ####  ✔✔✔ VALIDAMOS QUE EL PARTIDO NO SEA UN CARACTER VACÍO, FUNCIONA ✔ 
-    partido = input(mensaje) 
-    while partido == "":
-        partido = input("Valor vacío, reingresar partido: ")
-    return partido
+def ingresarValidarNombre(mensaje, mensajeDos):                                                            ####  ✔✔✔ FUNCION GENERICA PARA VALIDAR QUE EL NOMBRE INGRESADO YA SEA 
+    nombre = input(mensaje)                                                                                #### PARTIDO O ZONA GEOGRAFICA NO SEA STRING VACIO ✔✔✔
+    while nombre == "":
+        nombre = input(mensajeDos)
+    return nombre
 
 def ingresarValidarAbreviatura(mensaje):
     abv = input(mensaje) 
-    while (abv.isalnum()==False):                                                                                                   ##✔✔✔✔✔VALIDAMOS QUE EL VALOR SEA ALFANUMERICO, FUNCIONA ✔ ✔ ✔✔ ✔ ✔
+    while (abv.isalnum()==False):                                                                          ##✔✔✔✔✔VALIDAMOS QUE EL VALOR SEA ALFANUMERICO✔ ✔ ✔✔ ✔ ✔
         abv = input("Abreviatura debe ser un valor alfanumerico, reingresar: ")
     return abv
 
     
 def ingresarValidarNumeroLista(mensaje):
-    try:                                                      ###✔✔✔ VALIDAMOS NUMEROlista ENTERO DISTINTO DE CERO, FUNCIONA✔ ✔✔ ✔✔ ✔
-        numero = int(input(mensaje)) 
-        while numero ==0:
-            numero = int(input("Número igual a cero o invalido, reingresa numero: "))
-    except ValueError:
-        print("ERROR, se debe ingresar un numero")
-        numero = int(input("Número igual a cero o invalido, reingresa numero: "))
-        while numero ==0:
-            numero = int(input("Número igual a cero o invalido, reingresa numero: "))
-    return numero
+    error= False
+    while True:
+        try:                                                                                               ###✔✔✔ VALIDAMOS NUMEROlista ENTERO DISTINTO DE CERO✔ ✔✔ ✔✔ ✔
+            numeroLista = int(input(mensaje))
+            while numeroLista ==0:
+                numeroLista = int(input("Número igual a cero o invalido, reingresa numero: "))
+        except ValueError:
+            print("ERROR, se debe ingresar un numero")
+            error = True
 
-
-#FIN FUNCIONES PARA VALIDAR
+        if numeroLista!=0 or error == False:
+            break
+            
+    return numeroLista
+#FIN FUNCIONES PARA VALIDAR DATOS
 
 
 #INICIO BLOQUE DE FUNCIONES PARA EVITAR DUPLICADOS
-def duplicadoRegion(region,lista):### VALIDAMOS QUE LA REGION NO ESTÉ DUPLICADA ✔✔✔✔✔✔✔✔
-    while region.upper() in lista:
-        region = input("Region repetida, ingresar otra region:")
+def duplicadoRegion(region,lista):                                                                         ### BUSQUEDA DE REGION INGRESADA POR TECLADO Y LA LISTA PARA BUSCAR ✔✔✔✔✔✔✔✔
+    while region.upper() in lista:                                                                         ## SE VERIFICA SI ESTA EN LA LISTA
+        region = ingresarValidarNombre("Region repetida, ingrese otra region: ","Valor vacio, reingrese nombre de region: ") ## SI EL DATO ESTÁ EN LA LISTA SE PIDE OTRO DATO Y SE UTILIZA LA FUNCION INGRESAR VALIDAR NUEVAMENTE
     return region.upper()
     
-def duplicadoValidarPartido(partido,lista):   ### VALIDAMOS QUE NO SE INGRESE PARTIDO REPETIDO O ESPACIO VACÍO✔✔✔✔ 
-    while partido.upper() in lista or partido == "":
-        partido = input("Partido repetido, ingrese otro partido: ")
-    return partido
-def duplicadoValidarAbreviaturaPartido(abreviatura,lista):   ### VALIDAMOS QUE NO SE INGRESE LA ABREVIATURA DE PARTIDO REPETIDO O ESPACIO VACÍO✔✔✔✔ 
+def duplicadoValidarPartido(partido,lista):                                                                ### BUSQUEDA DE NOMBRE DE PARTIDO INGRESADO POR TECLADO, SE VERIFICA SI ESTÁ REPETIDO O ES UN ESPACIO VACÍO✔✔✔✔ 
+    while partido.upper() in lista or partido == "":                                                       
+        partido = ingresarValidarNombre("Partido repetido, ingrese otro: ","Valor vacio, reingrese nombre de partido: ")                               
+    return partido.upper()
+
+def duplicadoValidarAbreviaturaPartido(abreviatura,lista):                                                 ### BUSQUEDA DE ABREVIATURA DE PARTIDO, SE VERIFICA SI ESTÁ REPETIDO O ES UN ESPACIO VACÍO✔✔✔✔ 
     while abreviatura.upper() in lista or abreviatura == "":
-        abreviatura = input("Partido de abreviatura repetido, ingrese otra abreviatura de partido: ")
-    return abreviatura     
-def duplicadoValidarNumeroLista(numero,lista):   ### VALIDAMOS QUE NO SE INGRESE UN NÚMERO DE LISTA REPETIDO O ESPACIO VACÍO✔✔✔✔ 
+        abreviatura = ingresarValidarAbreviatura("Partido de abreviatura repetido o erroneo, ingrese otro: ")
+    return abreviatura 
+    
+def duplicadoValidarNumeroLista(numero,lista):                                                             ### BUSQUEDA DE NÚMERO DE LISTA DE PARTIDOS, SE VERIFICA SI ESTÁ REPETIDO O ES UN ESPACIO VACÍO✔✔✔✔ 
     while numero in lista or numero == "":
-        numero = int(input("Número de Lista repetido, ingrese otro número de lista: "))
+        numero = ingresarValidarNumeroLista("Número de Lista repetido o erroneo, ingrese otro: ")
     return numero
 #FIN BLOQUE DUPLICADOS
 
 
-### Inicio bloque de codigo para imprimir datos en pantalla
+### Inicio funciones para imprimir datos en pantalla
 
 def imprimirDatosPartidos():
-    try: archPartidosLectura = open("partidosPoliticos.csv","rt")                                                #### ABRIR ARCHIVO 
+    try: archPartidosLectura = open("partidosPoliticos.csv","rt")                                          #### ABRIR ARCHIVO PARA LEER DATOS PARTIDOS
     except IOError:
-        print("No se pudo leer el archivo Partidos")                                                                                    #### EXCEPCIÓN EN CASO DE NO PODER ABRIR ARCHIVO
+        print("No se pudo leer el archivo Partidos")                                                       #### EXCEPCIÓN EN CASO DE NO PODER ABRIR ARCHIVO
     else:
         try:
             print("\n\n\n")
@@ -72,12 +76,12 @@ def imprimirDatosPartidos():
             
 
 def imprimirDatosRegiones():
-    try: archRegionesLectura = open("zonaGeografica.csv","rt")                                               ###ARCHIVO PARA LEER
+    try: archRegionesLectura = open("zonaGeografica.csv","rt")                                               ###ABRIR ARCHIVO PARA LEER DATOS REGIONES
     except IOError:
-        print("No se pudo leer el archivo Regiones")                                                                                    ###EXCEPCION EN CASO DE NO PODER ABRIR ARCHIVO
+        print("No se pudo leer el archivo Regiones")                                                         ###EXCEPCION EN CASO DE NO PODER ABRIR ARCHIVO
     else:
         try:
-            print("\n\n\n")                                                                    #FORMATO DE PRINT
+            print("\n\n\n")                                                                                  ##FORMATO DE PRINT
             print("________________________________________________________________________")
             print("                          \033[1mREGIONES GEOGRAFICAS\033[0m        ")
             print("________________________________________________________________________")
@@ -90,12 +94,12 @@ def imprimirDatosRegiones():
         finally:
             archRegionesLectura.close()
 
-## Fin bloque para imprimir
+####### Fin bloque de codigo para imprimir datos en pantalla ########
 
 
 
 
-##########  PROGRAMA PRINCIPAL  ##############
+                                                                ##########  PROGRAMA PRINCIPAL  ##############
 
 
 
@@ -104,50 +108,54 @@ listaPartidos=[]
 listaAbreviaturas=[]
 listaDeNumeros = []
 try:
-    archPartido = open("partidosPoliticos.csv","wt")        		###CREAMOS EL ARCHIVO DONDE SE ESCRIBIRÁ LA INFO DE PARTIDOS POLITICOS
+    archPartido = open("partidosPoliticos.csv","wt")        		                                          ###CREAMOS EL ARCHIVO DONDE SE ESCRIBIRÁ LA INFO DE PARTIDOS POLITICOS
 except IOError:
-    print("No se pudo crear el archivo de Partidos")                   							###EXCEPCIÓN EN CASO DE NO PODER CREARLO
+    print("No se pudo crear el archivo de Partidos")                   							              ###EXCEPCIÓN EN CASO DE NO PODER CREARLO
 
 else:
-    partido = ingresarValidarPartido("Ingrese nombre del partido, FIN para finalizar: ") 			###INGRESAMOS PARTIDO FUERA DE WHILE (CONDICIÓN DE FIN ACÁ)
+    partido = ingresarValidarNombre("Ingrese nombre del partido, FIN para finalizar: ","Valor vacio, reingrese nombre de partido") 		###INGRESAMOS PARTIDO FUERA DE WHILE (CONDICIÓN DE FIN ACÁ)
     
     while partido.upper() !="FIN":														
-        partido=duplicadoValidarPartido(partido,listaPartidos)                                  ###VALIDAMOS PARTIDO										
+        partido=duplicadoValidarPartido(partido,listaPartidos)                                                ###VALIDAMOS PARTIDO										
         listaPartidos.append(partido.upper())
 
-        abreviatura = ingresarValidarAbreviatura("Ingrese Abreviatura del partido: ")						###INGRESAMOS Y LUEGO VALIDAMOS ABREVIATURA
+        abreviatura = ingresarValidarAbreviatura("Ingrese Abreviatura del partido: ")						  ###INGRESAMOS Y LUEGO VALIDAMOS ABREVIATURA
         abreviatura = duplicadoValidarAbreviaturaPartido(abreviatura,listaAbreviaturas)
         listaAbreviaturas.append(abreviatura.upper())
 
-        numeroLista = ingresarValidarNumeroLista("Ingresar numero de lista distinto de cero: ")     ###INGRESAMOS Y LUEGO VALIDAMOS NUMERO DE LISTA (ES INT DISTINTO CERO)
+        numeroLista = ingresarValidarNumeroLista("Ingresar numero de lista distinto de cero: ")               ###INGRESAMOS Y LUEGO VALIDAMOS NUMERO DE LISTA (ES INT DISTINTO CERO)
         numeroLista = duplicadoValidarNumeroLista(numeroLista,listaDeNumeros)
         listaDeNumeros.append(numeroLista)
 
         
-        archPartido.write(partido.upper()+";"+abreviatura.upper()+";"+str(numeroLista)+"\n")		###PASAMOS LAS 3 VARIABLES AL ARCHIVO YA CREADO Y VOLVEMOS A PEDIR PARTIDO LUEGO
-        partido = input("Ingrese otro nombre del partido, o FIN para finalizar: ") 		###VOLVEMOS A PEDIR PARTIDO, PARA REEMPEZAR O TERMINAR CICLO (CONDICIÓN DE FIN ACÁ)
+        archPartido.write(partido.upper()+";"+abreviatura.upper()+";"+str(numeroLista)+"\n")		          ###PASAMOS LAS 3 VARIABLES AL ARCHIVO YA CREADO Y VOLVEMOS A PEDIR PARTIDO LUEGO
+        partido = ingresarValidarNombre("Ingrese nombre del partido, FIN para finalizar: ","Valor vacio, reingrese nombre de partido") 		                      ###VOLVEMOS A PEDIR PARTIDO, PARA REEMPEZAR O TERMINAR CICLO (CONDICIÓN DE FIN ACÁ)
 
-    archPartido.close()															### TERMINADO EL WHILE, CERRAMOS EL ARCHIVO CON LOS CAMBIOS REALIZADOS
+    archPartido.close()															                              ### TERMINADO EL WHILE, CERRAMOS EL ARCHIVO CON LOS CAMBIOS REALIZADOS
 
-contadorRegion = 1                                                            ###CREAMOS UN CONTADOR PARA ASIGNAR A CADA REGION SU CODIGO
+contadorRegion = 1                                                                                            ###CREAMOS UN CONTADOR PARA ASIGNAR A CADA REGION SU CODIGO
 
-try: archRegiones = open("zonaGeografica.csv","wt")         ###CREAMOS ARCHIVO PARA REGIONES
+try: archRegiones = open("zonaGeografica.csv","wt")                                                           ###CREAMOS ARCHIVO PARA REGIONES
 except IOError:
-    print("No se pudo crear el archivo de Regiones")                         ###CREAMOS EXCEPCION EN CASO DE NO PODER CREARLO
+    print("No se pudo crear el archivo de Regiones")                                                          ###CREAMOS EXCEPCION EN CASO DE NO PODER CREARLO
 else:
-    region = input("Ingrese una region, FIN para finalizar la carga: ")#####    VALIDAR QUE LA REGION NO EXISTA!!!!!!!
+    region = ingresarValidarNombre("Ingrese una region, FIN para finalizar la carga: ","Valor vacío, reingrese nombre de region")    
     while region.upper() !="FIN":
-                              #### SI LA REGION YA EXISTE, PEDIR OTRA AQUÍ, VA UN WHILE
+                                                                                                              #### SI LA REGION YA EXISTE, PEDIR OTRA AQUÍ, VA UN WHILE
         listaRegiones.append(region.upper())
-        archRegiones.write(region.upper()+";"+str(contadorRegion)+"\n")       ### ESCRIBIMOS LA REGION Y EL IDENTIFICADOR EN EL ARCHIVO
-        contadorRegion+=1                                             ### AUMENTAMOS EN 1 EL IDENTIFICADOR, PARA LA SIGUIENTE REGION
-        region = input("Ingrese una region, FIN para finalizar la carga: ")                        ### INGRESAMOS SIGUIENTE REGION O FINALIZAMOS LA CARGA
-        region = duplicadoRegion(region,listaRegiones)
+        archRegiones.write(region.upper()+";"+str(contadorRegion)+"\n")                                       ### ESCRIBIMOS LA REGION Y EL IDENTIFICADOR EN EL ARCHIVO
+        contadorRegion+=1                                                                                     ### AUMENTAMOS EN 1 EL IDENTIFICADOR, PARA LA SIGUIENTE REGION
+        region = ingresarValidarNombre("Ingrese una region, FIN para finalizar la carga: ","Valor vacío, reingrese nombre de region") ### INGRESAMOS SIGUIENTE REGION O FINALIZAMOS LA CARGA
+        region = duplicadoRegion(region,listaRegiones)                                                        ### SE VERIFICA QUE NO EXISTA DUPLICADO
 
         
-    archRegiones.close()                                              ### CERRAMOS EL ARCHIVO DE REGIONES
+    archRegiones.close()                                                                                      ### CERRAMOS EL ARCHIVO DE REGIONES
 
-       
-#Imprimimos en pantalla los datos ingresados 
-imprimirDatosPartidos()
-imprimirDatosRegiones()
+
+imprimirDatosPartidos()                                                                                       #Imprimimos en pantalla los datos ingresados de partidos
+imprimirDatosRegiones()                                                                                       #Imprimimos en pantalla los datos ingresados de regiones
+
+
+
+
+                                                                ##########  FIN PROGRAMA PRINCIPAL  ##############
