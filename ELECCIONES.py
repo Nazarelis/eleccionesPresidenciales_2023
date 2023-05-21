@@ -1,20 +1,20 @@
 ### BLOQUE DE CODIGO DE FUNCIONES QUE VALIDAN DATOS INGRESADOS POR TECLADO
 
-#FUNCION GENERICA PARA VALIDAR QUE EL NOMBRE INGRESADO YA SEA DE PARTIDO O ZONA GEOGRAFICA NO SEA STRING VACIO ✔✔✔
+# FUNCION GENERICA PARA VALIDAR QUE EL NOMBRE INGRESADO YA SEA DE PARTIDO O ZONA GEOGRAFICA NO SEA STRING VACIO ✔✔
 def ingresarValidarNombre(mensaje, mensajeDos):                                                            
     nombre = input(mensaje)                                                                                 
     while nombre == "":
         nombre = input(mensajeDos)
     return nombre
 
-#FUNCION PARA VALIDAR QUE QUE EL DATO SEA ALFANUMERICO✔ ✔ ✔✔ ✔ ✔
+# FUNCION PARA VALIDAR QUE QUE EL DATO SEA ALFANUMERICO ✔✔ 
 def ingresarValidarAbreviatura(mensaje):
     abv = input(mensaje) 
     while (abv.isalnum()==False):                                                                          
         abv = input("Abreviatura debe ser un valor alfanumerico, reingresar: ")
     return abv
 
-#FUNCION PARA VALIDAR QUE NUMERO LISTA SEA ENTERO Y DISTINTO DE CERO ✔✔ ✔✔ ✔
+# FUNCION PARA VALIDAR QUE NUMERO LISTA SEA ENTERO Y DISTINTO DE CERO. MANEJA EXCEPCION VALUE ERROR ✔✔ 
 def ingresarValidarNumeroLista(mensaje):
     error = False
     numeroLista = None
@@ -118,6 +118,10 @@ listaRegiones = []
 listaPartidos = []
 listaAbreviaturas = []
 listaDeNumeros = []
+# BANDERAS PARA VERIFICAR QUE SE INGRESARON DATOS
+ingresoDatosRegiones = False
+ingresoDatosPartidos = False
+
 try:
     archPartido = open("partidosPoliticos.csv","wt")        		 # CREAMOS EL ARCHIVO DONDE SE ESCRIBIRÁ LA INFO DE PARTIDOS POLITICOS
 except IOError:
@@ -140,6 +144,7 @@ else:
 
         
         archPartido.write(partido.upper()+";"+abreviatura.upper()+";"+str(numeroLista)+"\n")		  # ESCRIBIMOS LAS 3 VARIABLES AL ARCHIVO YA CREADO
+        ingresoDatosPartidos = True
         partido = ingresarValidarNombre("Ingrese nombre del partido, FIN para finalizar: ","Valor vacio, reingrese nombre de partido: ") # VOLVEMOS A PEDIR PARTIDO, PARA VOLVER A TOMAR MÁS DATOS O TERMINAR EL CICLO (CONDICIÓN DE FIN ACÁ)
 
     # TERMINADO EL WHILE, CERRAMOS EL ARCHIVO CON LOS CAMBIOS REALIZADOS
@@ -160,7 +165,8 @@ else:
                                                                                         
         listaRegiones.append(region.upper())
         # ESCRIBIMOS LA REGION Y EL IDENTIFICADOR EN EL ARCHIVO
-        archRegiones.write(region.upper() + ";" + str(contadorRegion)+"\n")             
+        archRegiones.write(region.upper() + ";" + str(contadorRegion)+"\n")
+        ingresoDatosRegiones = True           
         # AUMENTAMOS EN 1 EL IDENTIFICADOR, PARA LA SIGUIENTE REGION
         contadorRegion += 1                                                             
         # INGRESAMOS SIGUIENTE REGION O FINALIZAMOS LA CARGA
@@ -171,11 +177,13 @@ else:
     # CERRAMOS EL ARCHIVO DE REGIONES
     archRegiones.close()                                                   
 
-
-# Imprimimos en pantalla los datos ingresados de partidos
-imprimirDatosPartidos()         
-# Imprimimos en pantalla los datos ingresados de regiones
-imprimirDatosRegiones()                                                              
+if ingresoDatosPartidos == True or ingresoDatosRegiones == True:
+    # Imprimimos en pantalla los datos ingresados de partidos
+    imprimirDatosPartidos()         
+    # Imprimimos en pantalla los datos ingresados de regiones
+    imprimirDatosRegiones() 
+else:
+    print("No se ingresaron datos")                                                             
 
 
 ##########  FIN PROGRAMA PRINCIPAL  ##########
