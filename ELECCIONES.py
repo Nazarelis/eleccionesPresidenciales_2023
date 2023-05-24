@@ -123,7 +123,7 @@ ingresoDatosRegiones = False
 ingresoDatosPartidos = False
 
 try:
-    archPartido = open("partidosPoliticos.csv","wt")        		 # CREAMOS EL ARCHIVO DONDE SE ESCRIBIRÁ LA INFO DE PARTIDOS POLITICOS
+    archPartido = open("partidosPoliticos.csv","at")        		 # CREAMOS EL ARCHIVO DONDE SE ESCRIBIRÁ LA INFO DE PARTIDOS POLITICOS
 except IOError:
     print("No se pudo crear el archivo de Partidos")                 # EXCEPCIÓN EN CASO DE NO PODER CREARLO
 
@@ -155,7 +155,7 @@ else:
 contadorRegion = 1                                                                                            
 
 # CREAMOS ARCHIVO PARA REGIONES
-try: archRegiones = open("zonaGeografica.csv","wt") 
+try: archRegiones = open("zonaGeografica.csv","at") 
 # CREAMOS EXCEPCION EN CASO DE NO PODER CREARLO                                                          
 except IOError:
     print("No se pudo crear el archivo de Regiones")                                                          
