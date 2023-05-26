@@ -26,68 +26,90 @@ def ingresarValidarCantidadRegistros(mensaje):
 # FIN FUNCION PARA VALIDAR CANTIDAD N DE REGISTROS
 
 
-# FUNCION PARA OBTENER CODIGO DE REGION                                     ###########################################
-def obtenerCodigoRegion():                                                  # INICIO DE BLOQUE DE CODIGO EN PROCESO
-    try:                                                                    #
-        archivoRegiones = open("zonaGeografica.csv", "rt")                  #
-    except IOError:                                                         #
-        print("No se pudo encontrar archivo")                               #
-    else:                                                                   #
-        registro = archivoRegiones.readline()                               #
-        while registro:                                                     #
-            nombre,codigo= registro.split(";")
-            region = input("Ingrese nombre region a votar: ")               #
-            if region == nombre:                                            #
-                codigoRegion = codigo
-            else:                                                           #
-                print("Nombre de region invalido")                          #
-                region = input("Ingrese nombre region a votar: ")           #
-            registro = archivoRegiones.readline()                           #
+# INICIO FUNCIONES DE BUSQUEDAS EN ARCHIVOS
+
+def busquedaRegion(nombreRegion):
+    try:                                                                    
+        archivoRegiones = open("zonaGeografica.csv", "rt")                  
+    except IOError:                                                         
+        print("No se pudo encontrar archivo")                               
+    else:
+        codigoRegion = None
+        registro = archivoRegiones.readline()
+        while registro:
+            nombre, codigo = registro.split(";")
+            if nombreRegion == nombre:
+                codigoRegion = codigo.rstrip("\n")
+                break
+            registro = archivoRegiones.readline() 
     finally:
-        archivoRegiones.close()                                             #
-    return codigoRegion                                                     #                                 
-# FIN FUNCION PARA OBTENER CODIGO DE REGION                                 #
-                                                                            #
-# FUNCION PARA OBTENER ABREVIATURA DE PARTIDO                               #
-def obtenerCodigoPartido():                                                 
-    try:                                                                    #
-        archivoPartidos = open("partidosPoliticos.csv", "rt")               #
-    except IOError:                                                         #
-        print("No se pudo encontrar archivo")                               #
-    else:                                                                   #
-        registro = archivoPartidos.readline()                               #
-        while registro:                                                     #
-            nombre, abreviatura, codigo = registro.split(";")               #
-            nombrePartido = input("Ingrese nombre partido a votar: ")       #
-            if nombrePartido == nombre:                                     #
-                abreviaturaPartido = abreviatura                            #
-            else:                                                           #
-                print("Nombre de partido invalido")                         #
-                region = input("Ingrese nombre partido a votar: ")          #
-            registro = archivoPartidos.readline()                           #   
-    finally:                                                                #
-        archivoPartidos.close()                                             #
-    return abreviaturaPartido                                               # FIN BLOQUE DE CODIGO EN PROCESO
-# FIN FUNCION PARA OBTENER ABREVIATURA DE PARTIDO                           ##################################
+        archivoRegiones.close()
+    return codigoRegion
+
+def busquedaPartido(nombrePartido):
+    try:                                                                    
+        archivoPartido = open("partidosPoliticos.csv", "rt")                  
+    except IOError:                                                         
+        print("No se pudo encontrar archivo")                               
+    else:
+        abrevPartido = None
+        registro = archivoPartido.readline()
+        while registro:
+            nombre, abreviatura, codigo = registro.split(";")
+            if nombrePartido == nombre:
+                abrevPartido = abreviatura
+                break
+            registro = archivoPartido.readline() 
+    finally:
+        archivoPartido.close()
+    return abrevPartido
+
+# FIN FUNCIONES DE BUSQUEDAS EN ARCHIVOS
+
+
+# FUNCION PARA OBTENER CODIGO DE REGION                                     
+def obtenerCodigoRegion():                                                  
+    region = input("Ingrese nombre region a votar: ")
+    codigoRegion = busquedaRegion(region.upper())
+    while codigoRegion == None:
+        print("Region invalida")
+        region = input("Reingrese nombre region a votar: ")
+        codigoRegion = busquedaRegion(region.upper())
+    return codigoRegion.upper()
+                                                   
+# FIN FUNCION PARA OBTENER CODIGO DE REGION                                 
+                                                                            
+# FUNCION PARA OBTENER ABREVIATURA DE PARTIDO                               
+def obtenerAbreviaturaPartido():
+    partido = input("Ingrese nombre partido a votar: ")
+    abreviaturaPartido = busquedaPartido(partido.upper())
+    while abreviaturaPartido == None:
+        print("Partido invalido")
+        partido = input("Reingrese nombre partido a votar: ")
+        abreviaturaPartido = busquedaPartido(partido.upper())
+    return abreviaturaPartido.upper()   
+    
+    
+                                                                            
+# FIN FUNCION PARA OBTENER ABREVIATURA DE PARTIDO                          
 
 
 # FUNCION PARA SELECCIONAR CARGO A VOTAR
-def cargoAVotar(lCargos):
+def cargoAVotar():
     cargoSeleccionado = input("seleccione cargo a votar: \n [1]. Presidente y Vicepresidente\n [2]. Diputado\n [3]. Senador\n [4]. Gobernador y Vicegobernadr\n ")
     if cargoSeleccionado == "1":
-        cargoAVotar = lCargos[0]
+        cargoAVotar = 1
     if cargoSeleccionado == "2":
-         cargoAVotar = lCargos[1]
+         cargoAVotar = 2
     if cargoSeleccionado == "3":
-         cargoAVotar = lCargos[2]
+         cargoAVotar = 3
     if cargoSeleccionado == "4":
-         cargoAVotar = lCargos[3]
+         cargoAVotar = 4
     return cargoAVotar
-# FIN FUNCION PARA SELECCIONAR CARGO
+# FIN FUNCION PARA SELECCIONAR CARGO A VOTAR
 
 
 ##########  PROGRAMA PRINCIPAL  ##########
-listaCargos = ["PRESIDENTE Y VICEPRESIDENTE", "DIPUTADO", "SENADOR", "GOBERNADOR Y VICEGOBERNADOR"]
 
 # REGISTRO DE VOTOS
 try:
@@ -100,10 +122,13 @@ else:
         dni = generarNroDniRandom()
         print(dni)
         codigoRegion = obtenerCodigoRegion()
-        cargo = cargoAVotar()
-        abrevPartido = obtenerCodigoPartido()
+        print(codigoRegion)
+        codigoCargo = cargoAVotar()
+        print(codigoCargo)
+        abrevPartido = obtenerAbreviaturaPartido()
+        print(abrevPartido)
 
-        archivoVotos.write(str(dni) + ";" + codigoRegion + ";" + cargo + ";" + abrevPartido "\n")
+        archivoVotos.write(str(dni) + ";" + str(codigoRegion) + ";" + str(codigoCargo) + ";" + abrevPartido + "\n")
 finally:
     archivoVotos.close()
 
