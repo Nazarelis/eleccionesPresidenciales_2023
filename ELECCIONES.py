@@ -1,12 +1,3 @@
-import random
-### INICIO BLOQUE DE CODIGO DE FUNCIONES DE REGISTRO
-def nroDni(nro):
-    #GENERA UN NUMERO AL AZAR DE 9 DIGITOS
-    nro = random.randint(0,100000000)
-    return nro
-
-### FIN BLOQUE DE CODIGO DE FUNCIONES DE REGISTRO
-
 ### BLOQUE DE CODIGO DE FUNCIONES QUE VALIDAN DATOS INGRESADOS POR TECLADO
 
 # FUNCION GENERICA PARA VALIDAR QUE EL NOMBRE INGRESADO YA SEA DE PARTIDO O ZONA GEOGRAFICA NO SEA STRING VACIO ✔✔
@@ -193,11 +184,5 @@ if ingresoDatosPartidos == True or ingresoDatosRegiones == True:
     imprimirDatosRegiones() 
 else:
     print("No se ingresaron datos")                                                             
-"""
-PRUEBA PARA GENERAR EL NRO DE DNI en proceso---
-numero=int(input("seleccione 1 para ingresar su DNI: "))
-nro= nroDni(numero)
-print(nro)
-"""
 
 ##########  FIN PROGRAMA PRINCIPAL  ##########
