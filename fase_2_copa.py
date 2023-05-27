@@ -3,6 +3,12 @@ import random
 def generarNroDniRandom():
     #GENERA UN NUMERO AL AZAR VALOR ENTERO POSITIVO MENOR A 100000000
     nro = random.randint(0,99999999)
+    #NRO PARA EL VOTO EN BLANCO
+    if "5" in str(nro):
+        print("se encuentra: dni voto en blanco")
+    else:
+        print("no es un voto en blanco")#EN PROCESO
+        
     return nro
 # FIN BLOQUE DE CODIGO DE FUNCIONES DE REGISTRO
 
