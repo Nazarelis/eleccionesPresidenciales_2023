@@ -8,7 +8,7 @@ def llenarMatriz(filas,columnas,m):
     print(m)
 
 def imprimirMatriz(filas,columnas,m):
-    print("\n\n        DNI     REGION    CARGO      PRES       DIP       SEN       GOB  \n")
+    print("\n\n        DNI     REGION     PRES       DIP       SEN       GOB  \n")
     for i in range(filas):
         print("\n")
         for j in range(columnas):
@@ -130,7 +130,7 @@ except IOError as msg:
     print(msg)
 else:
     cantidadRegistros = ingresarValidarCantidadRegistros("Indique en números cuántos sufragios se ingresarán ")
-    llenarMatriz(cantidadRegistros,7,m)
+    llenarMatriz(cantidadRegistros,6,m)
     for i in range(cantidadRegistros):
         dni = generarNroRandom(0, 99999999)
         codigoRegion = obtenerCodigoRegion()
@@ -141,7 +141,7 @@ else:
         print(f'Dni: {dni}, codigo region: {codigoRegion}, codigo cargo: {codigoCargo}, abreviatura del partido: {abrevPartido}')
         m[i][0]=dni
         m[i][1]=int(codigoRegion)
-        m[i][int(codigoCargo+2)]=1
+        m[i][int(codigoCargo+1)]=1
 finally:
     archivoVotos.close()
 # FIN REGISTRO DE VOTOS
@@ -149,7 +149,7 @@ finally:
 
 print(listaNombreRegiones)
 print(listaCargos)
-imprimirMatriz(cantidadRegistros,7,m)
+imprimirMatriz(cantidadRegistros,6,m)
 
 ##########  FIN PROGRAMA PRINCIPAL  ##########
 
