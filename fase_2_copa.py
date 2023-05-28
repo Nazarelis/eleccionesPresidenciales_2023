@@ -1,5 +1,21 @@
 import random
 
+def llenarMatriz(filas,columnas,m):
+    for i in range(filas):
+        m.append([])
+        for j in range(columnas):
+            m[i].append(0)
+    print(m)
+
+def imprimirMatriz(filas,columnas,m):
+    print("\n\n        DNI     REGION     PRES       DIP       SEN       GOB  \n")
+    for i in range(filas):
+        print("\n")
+        for j in range(columnas):
+            print("%10d"%m[i][j],end="")
+
+
+
 # INICIO BLOQUE DE CODIGO DE FUNCIONES 
 def generarNroRandom(limiteInferior, limiteSuperior):
     # GENERA UN NUMERO AL AZAR VALOR ENTERO POSITIVO MENOR A 100000000
@@ -104,6 +120,7 @@ def obtenerAbreviaturaPartido():
 
 listaCargos = ["PRESIDENTE Y VICEPRESIDENTE", "DIPUTADO", "SENADOR", "GOBERNADOR Y VICEGOBERNADOR"]
 listaNombreRegiones = obtenerListaDeRegiones()
+m=[]
 
 
 # INICIO REGISTRO DE VOTOS
@@ -113,6 +130,7 @@ except IOError as msg:
     print(msg)
 else:
     cantidadRegistros = ingresarValidarCantidadRegistros("Indique en números cuántos sufragios se ingresarán ")
+    llenarMatriz(cantidadRegistros,6,m)
     for i in range(cantidadRegistros):
         dni = generarNroRandom(0, 99999999)
         codigoRegion = obtenerCodigoRegion()
@@ -121,6 +139,9 @@ else:
 
         archivoVotos.write(str(dni) + ";" + str(codigoRegion) + ";" + str(codigoCargo) + ";" + abrevPartido + "\n")
         print(f'Dni: {dni}, codigo region: {codigoRegion}, codigo cargo: {codigoCargo}, abreviatura del partido: {abrevPartido}')
+        m[i][0]=dni
+        m[i][1]=int(codigoRegion)
+        m[i][int(codigoCargo+1)]=1
 finally:
     archivoVotos.close()
 # FIN REGISTRO DE VOTOS
@@ -128,6 +149,7 @@ finally:
 
 print(listaNombreRegiones)
 print(listaCargos)
+imprimirMatriz(cantidadRegistros,6,m)
 
 ##########  FIN PROGRAMA PRINCIPAL  ##########
 
