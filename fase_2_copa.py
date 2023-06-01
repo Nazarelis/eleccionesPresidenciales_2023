@@ -1,13 +1,35 @@
 import random
 
-# INICIO FUNCION PARA GENERAR NUMERO RANDOM
+def buscar_valor(matriz, columna, valor):
+    for i in range(len(matriz)):
+        if matriz[i][columna] == valor:
+            return i
+    return -1
+
+def llenarMatriz(filas,columnas,m):
+    for i in range(filas):
+        m.append([])
+        for j in range(columnas):
+            m[i].append(0)
+    print(m)
+
+def imprimirMatriz(filas,columnas,m):
+    print("\n\n        DNI     REGION     PRES       DIP       SEN       GOB  \n")
+    for i in range(filas):
+        print("\n")
+        for j in range(columnas):
+            print("%10d"%m[i][j],end="")
+
+
+
+# INICIO BLOQUE DE CODIGO DE FUNCIONES 
 def generarNroRandom(limiteInferior, limiteSuperior):
     # GENERA UN NUMERO AL AZAR VALOR ENTERO POSITIVO MENOR A 100000000
     nroRandom = random.randint(limiteInferior, limiteSuperior)
     return nroRandom
-# FIN FUNCION PARA GENERAR NUMERO RANDOM
+# FIN BLOQUE DE CODIGO DE FUNCIONES DE REGISTRO
 
-# INICIO FUNCION QUE INGRESA Y VALIDA QUE CANTIDAD N DE REGISTROS SEA NUMERO NATURAL VALIDO
+# FUNCION QUE INGRESA Y VALIDA QUE CANTIDAD N DE REGISTROS SEA NUMERO NATURAL VALIDO
 def ingresarValidarCantidadRegistros(mensaje):
     error = False
     cantRegistros = None
@@ -25,7 +47,7 @@ def ingresarValidarCantidadRegistros(mensaje):
     return cantRegistros
 # FIN FUNCION PARA VALIDAR CANTIDAD N DE REGISTROS
 
-# INICIO FUNCION PARA ENCONTRAR CANTIDAD DE REGISTROS EN LOS ARCHIVOS
+# FUNCION PARA ENCONTRAR CANTIDAD DE REGISTROS EN LOS ARCHIVOS
 def busquedaCantRegistrosEnArchivos(archivo):
     try:                                                                    
         archivoParaLeer = open(archivo, "rt")                  
@@ -39,7 +61,7 @@ def busquedaCantRegistrosEnArchivos(archivo):
     return cantRegistros
 # FIN FUNCION PARA ENCONTRAR CANTIDAD DE REGISTROS EN LOS ARCHIVOS
 
-# INICIO FUNCION PARA OBTENER LOS NOMBRES DE REGIONES Y RETORNAR UNA LISTA CON ESOS DATOS
+# FUNCION PARA OBTENER LOS NOMBRES DE REGIONES Y RETORNAR UNA LISTA CON ESOS DATOS
 def obtenerListaDeRegiones():
     lista = []
     try:                                                                    
@@ -58,7 +80,7 @@ def obtenerListaDeRegiones():
 # FIN FUNCION PARA OBTENER LOS NOMBRES DE REGIONES
     
 
-# INICIO FUNCION PARA OBTENER CODIGO DE REGION                                     
+# FUNCION PARA OBTENER CODIGO DE REGION                                     
 def obtenerCodigoRegion():                                    
     cantRegiones = busquedaCantRegistrosEnArchivos("zonaGeografica.csv")
     regionAleatoria = random.randint(0,cantRegiones-1)
@@ -77,7 +99,7 @@ def obtenerCodigoRegion():
 # FIN FUNCION PARA OBTENER CODIGO DE REGION                                 
 
 
-# INICIO FUNCION PARA OBTENER ABREVIATURA DE PARTIDO                               
+# FUNCION PARA OBTENER ABREVIATURA DE PARTIDO                               
 def obtenerAbreviaturaPartido():
     abrevPartido = "Voto en blanco"
 # VARIABLE CANTIDAD PARTIDOS GUARDARÁ LA CANTIDAD DE REGISTROS QUE EXISTEN EN EL ARCHIVO
@@ -100,115 +122,77 @@ def obtenerAbreviaturaPartido():
 # FIN FUNCION PARA OBTENER ABREVIATURA DE PARTIDO                          
 
 
-# INICIO FUNCIONES PARA MANEJAR LOS DATOS DE LOS VOTOS EN MATRICES
-
-# FUNCION INICIALIZAR MATRIZ SOLO GENERA LA PRIMERA FILA Y COLUMNAS DE LA MISMA. MAS ADELANTE SE LE AGREGARÁN MÁS FILAS
-def inicializarMatriz(columnas):
-    matriz = [[0] * columnas]
-    return matriz
-
-def busquedaVotanteEnMatriz(matriz, cantFilas, dni, region, cargo):
-    votanteExiste = False
-    regionDistinta = False
-    yaVotoCargo = False
-    filaVotante = None
-    
-    for f in range(0, cantFilas):
-        if dni == matriz[f][0]:
-            votanteExiste = True
-            filaVotante = f
-            break
-    
-    if votanteExiste == True:
-        if int(region) != matriz[filaVotante][1]:
-            regionDistinta = True
-        if matriz[f][cargo + 1] == 1:
-            yaVotoCargo = True
-    
-    return votanteExiste, filaVotante, regionDistinta, yaVotoCargo
-
-# FUNCION PARA MOSTRARNOS QUE DATOS VAN INGRESANDO POR CADA VOTANTE
-def imprimirMatriz(filas,columnas,mat):
-    print("\n\n        DNI     REGION     PRES       DIP       SEN       GOB  \n")
-    for i in range(filas):
-        print("\n")
-        for j in range(columnas):
-            print("%10d"%mat[i][j],end="")
-
-# FIN FUNCIONES PARA MANEJAR LOS DATOS DE LOS VOTOS EN MATRICES
-
-
-# INICIO FUNCION PARA CONTAR Y MOSTRAR RESULTADOS # INCOMPLETO
-def conteoYMuestraDeVotos(listaNombres):
-    lista = [0] * len(listaNombres)
-    sumadorVotos = 0
-    try:
-        archivoParaLeer = open("archivo_votacion.csv", "rt")
-    except IOError as msg:
-        print(msg)
-    else:
-        registro = archivoParaLeer.readline()
-        while registro:
-            dni, region, cargo, partido = registro.split(";")
-            regionABuscar = region
-            sumadorVotos += 1
-            #print(sumadorVotos)
-            registro = archivoParaLeer.readline()
-            
-
-    finally:
-        archivoParaLeer.close()
-# FIN FUNCION PARA CONTAR Y MOSTRAR RESULTADOS
-    
-
-
 ##########  PROGRAMA PRINCIPAL  ##########
 
 listaCargos = ["PRESIDENTE Y VICEPRESIDENTE", "DIPUTADO", "SENADOR", "GOBERNADOR Y VICEGOBERNADOR"]
 listaNombreRegiones = obtenerListaDeRegiones()
+m=[]
+
+cantidadRegiones = busquedaCantRegistrosEnArchivos("zonaGeografica.csv")
+cantidadVotantesRegion = [0]*cantidadRegiones
+totalBlancosRegiones=[0]*cantidadRegiones
 
 
 # INICIO REGISTRO DE VOTOS
-cantVotos = 0
-cantDniIngresados = 0
 try:
     archivoVotos = open("archivo_votacion.csv", "wt")
 except IOError as msg:
     print(msg)
 else:
     cantidadRegistros = ingresarValidarCantidadRegistros("Indique en números cuántos sufragios se ingresarán ")
-    matriz = inicializarMatriz(6)
-    while cantVotos < cantidadRegistros:
-                                 
+    llenarMatriz(cantidadRegistros,6,m)
+    contador=0
+    while contador<cantidadRegistros:
         dni = generarNroRandom(0, 99999999)
         codigoRegion = obtenerCodigoRegion()
         codigoCargo = random.randint(1, 4)
         abrevPartido = obtenerAbreviaturaPartido()
+        if abrevPartido == "Voto en blanco":
+            totalBlancosRegiones[int(codigoRegion)-1]+=1
         
-        votanteExiste, filaVotante, votoRegion, votoCargo = busquedaVotanteEnMatriz(matriz, cantDniIngresados, dni, codigoRegion, codigoCargo)
+        cantidadVotantesRegion[int(codigoRegion)-1]+=1
         
-        # if votanteExiste == True:
-        if votoRegion == True or votoCargo == True:
-            continue
         
-        archivoVotos.write(str(dni) + ";" + str(codigoRegion) + ";" + str(codigoCargo) + ";" + abrevPartido + "\n")
-        
-        if votanteExiste == False:
-            # INGRESA FILA A LA MATRIZ A MEDIDA QUE INGRESAN NUEVOS DNI
-            matriz.append([0] * 6)
-            cantDniIngresados += 1
-            matriz[cantDniIngresados][0] = dni
-            matriz[cantDniIngresados][1] = int(codigoRegion)
-            matriz[cantDniIngresados][int(codigoCargo+1)] = 1
+        if buscar_valor(m,0,dni)==-1:
+            m[contador][0]=dni
+            m[contador][1]=int(codigoRegion)
+            m[contador][int(codigoCargo+1)]=1
+            archivoVotos.write(str(dni) + ";" + str(codigoRegion) + ";" + str(codigoCargo) + ";" + abrevPartido + "\n")
+            print(f'Dni: {dni}, codigo region: {codigoRegion}, codigo cargo: {codigoCargo}, abreviatura del partido: {abrevPartido}')
+            contador+=1
         else:
-            matriz[filaVotante][1] = int(codigoRegion)
-            matriz[filaVotante][int(codigoCargo+1)] = 1
-        cantVotos += 1
+            posDni=buscar_valor(m,0,dni)
+            print("dni encontrado en pos",posDni)
+            if m[posDni][1] !=codigoRegion:
+                print("No puede votar en distinta region")  
+            else:
+                if m[posDni][int(codigoCargo+1)]==1:
+                    print("No puede repetir cargo en su voto")
+                    
+                else:
+                    m[posDni][int(codigoCargo+1)]=1
+                    archivoVotos.write(str(dni) + ";" + str(codigoRegion) + ";" + str(codigoCargo) + ";" + abrevPartido + "\n")
+                    print(f'Dni: {dni}, codigo region: {codigoRegion}, codigo cargo: {codigoCargo}, abreviatura del partido: {abrevPartido}')
+                    contador+=1
         
+                    
+
 finally:
     archivoVotos.close()
 # FIN REGISTRO DE VOTOS
-matriz = matriz[1:]
-imprimirMatriz(cantDniIngresados, 6, matriz)
-conteoYMuestraDeVotos(listaNombreRegiones)
+
+
+print(listaNombreRegiones)
+print(listaCargos)
+imprimirMatriz(cantidadRegistros,6,m)
+
 ##########  FIN PROGRAMA PRINCIPAL  ##########
+
+
+print("\n\nCantidad de votantes por region",cantidadVotantesRegion)
+totalVotosRegiones = sum(cantidadVotantesRegion)
+print("\ntotal de los votos regiones",totalVotosRegiones)
+print("\ntotal de votos blancos por regiones",totalBlancosRegiones)
+
+
+
